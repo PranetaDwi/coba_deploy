@@ -1,0 +1,36 @@
+body{
+    background-color: rgb(227, 227, 227);
+}
+
+.navbar{
+    background-color: #2fa499;;
+}
+
+.navbar-brand{
+    font-style: bold;
+    color: white;
+}
+
+.nav-link{
+    color: white;
+}
+
+.nav-link:hover{
+    color: rgb(255, 255, 255);
+    background-color: rgb(17, 138, 213);
+}
+
+.card-header{
+    background-color: #a84cb8;
+    color: white;
+}
+
+.col-md-3{
+    background-color: #11625c;
+    color: white;
+}
+
+.col-md-3:hover{
+    background-color: rgb(17, 138, 213);
+    color: white;
+}

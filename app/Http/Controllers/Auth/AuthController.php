@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\facades\Auth;
 use Illuminate\Support\facades\Hash;
+use Mail;
+use App\Mail\SendEmail;
+use App\Jobs\SendMailJob;
 
 class AuthController extends Controller
 {
@@ -30,10 +33,19 @@ class AuthController extends Controller
             'password'=> Hash::make($request->password)
         ]);
 
+        $content = [
+            'name'=> $request->name,
+            'email' => $request->email,
+            'subject' => "Berhasil Register",
+            'body' => "Hai. Selamat datang di Curiculum Vitae Milik Neta. Sekarang, kamu dapat mengaksesnya kapan dan dimanpun. Have a Good Day",
+        ];
+
         $credentials = $request->only('email', 'password');
         Auth::attempt($credentials);
         $request->session()->regenerate();
-        return redirect()->route('dashboard')->withSuccess('You have successfully registered & loggedin!');
+        
+        dispatch(new SendMailJob($content));
+        return redirect()->route('dashboard')->withSuccess('You have successfully registered & logged in!');
     }
 
     public function login(){

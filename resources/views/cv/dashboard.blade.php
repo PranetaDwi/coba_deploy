@@ -1,6 +1,30 @@
 @extends('layout.master_dashboard')
 
 @section('content')
+	<div class="modal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title">Hai!!</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		@if ($message = Session::get('success'))
+		<div class="modal-body">
+			<p>{{ $message }}.</p>
+		</div>
+		@else
+		<div class="modal-body">
+			<p>You logged in!</p>
+		</div>
+		@endif
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+		</div>
+	</div>
+	</div>
 	<div id="colorlib-page">
 		<div class="container-wrap">
 		<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
@@ -77,12 +101,16 @@
 									<div class="about-desc">
 										<span class="heading-meta">About Me</span>
 										<h2 class="colorlib-heading">Who Am I?</h2>
-										<p><strong>Hi I'm Praneta Dwi Indarti</strong> I am an undergraduate student majoring Software Engineering faculty of
-											Vocational School at Gadjah Mada University. She is discipline, honest, and responsibility. She can work
-											in individual or team well and manage the time properly. 
-											</p>
-										<p>Praneta is interested in technological advances,
-										international issue and curious about new things to learn about it.</p>
+										<div class="card" style="background-color: aliceblue; padding: 20px; border-radius: 10px;" data-animate-effect="fadeInLeft">
+											<div class="card-body" data-animate-effect="fadeInLeft">
+												<p><strong>Hi I'm Praneta Dwi Indarti</strong> I am an undergraduate student majoring Software Engineering faculty of
+												Vocational School at Gadjah Mada University. She is discipline, honest, and responsibility. She can work
+												in individual or team well and manage the time properly. 
+												</p>
+												<p>Praneta is interested in technological advances,
+												international issue and curious about new things to learn about it.</p>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -245,15 +273,20 @@
 								<div class="col-md-12 animate-box" data-animate-effect="fadeInLeft">
 									<p><strong>SOFT SKILLS</strong></p>
 								</div>
-								<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+								<div class="col-md-4 animate-box" data-animate-effect="fadeInLeft">
 									<p>- Honest</p>
 									<p>- Discipline</p>
 									<p>- Team Work</p>
 								</div>
-								<div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+								<div class="col-md-4 animate-box" data-animate-effect="fadeInLeft">
 									<p>- Responsibility</p>
 									<p>- Ontime</p>
 									<p>- Decisive</p>
+								</div>
+								<div class="col-md-4 animate-box" data-animate-effect="fadeInLeft">
+									<p>- Analyst</p>
+									<p>- Brave</p>
+									<p>- Happy-Maker</p>
 								</div>
 							</div>
 						</div>
@@ -491,6 +524,15 @@
 								</div>
 								<div class="colorlib-text">
 									<p><a href="tel://" style="color: black;">085877573513</a></p>
+								</div>
+							</div>
+
+							<div class="colorlib-feature colorlib-feature-sm animate-box" data-animate-effect="fadeInLeft">
+								<div class="colorlib-icon">
+									<i class="icon-github"></i>
+								</div>
+								<div class="colorlib-text">
+									<p><a href="https://github.com/PranetaDwi/ppw2_auth_cv.git" style="color: black;">GitHub</a></p>
 								</div>
 							</div>
 						</div>

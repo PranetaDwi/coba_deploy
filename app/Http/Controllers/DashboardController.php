@@ -13,13 +13,5 @@ class DashboardController extends Controller
     public function dashboard(){
         return view ('cv.dashboard');
     }
-
-    public function about(){
-        return view ('cv.about');
-    }
-
-    public function portfolio(){
-        return view ('cv.portfolio');
-    }
-
+    
 }

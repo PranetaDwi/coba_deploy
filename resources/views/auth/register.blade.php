@@ -1,12 +1,23 @@
 @extends('auth.layouts')
 
+@section('css')
+<link rel="stylesheet" href="/css/register_page.css">
+@endsection
+
+@section('title')
+Register
+@endsection
+
+@section('title2')
+Register 
+@endsection
+
 @section('content')
 
 <div class="row justify-content-center mt-5">
     <div class="col-md-8">
-
         <div class="card">
-            <div class="card-header">Register</div>
+            <div class="card-header">Register Here!</div>
             <div class="card-body">
                 <form action="{{ route('store') }}" method="post">
                     @csrf

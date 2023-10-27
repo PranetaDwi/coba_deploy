@@ -1,12 +1,24 @@
 @extends('auth.layouts')
 
+@section('css')
+<link rel="stylesheet" href="/css/login_page.css">
+@endsection
+
+@section('title')
+Login
+@endsection
+
+@section('title2')
+Login 
+@endsection
+
 @section('content')
 
 <div class="row justify-content-center mt-5">
-    <div class="col-md-8">
+    <div class="col-md-6">
 
     <div class="card">
-        <div class="card-header">Login</div>
+        <div class="card-header">Please Login Here!</div>
         <div class="card-body">
             <form action="{{ route('authenticate') }}" method="post">
                 @csrf
@@ -29,7 +41,7 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Login">
+                    <input type="submit" class="col-md-3 offset-md-5 btn" value="Login">
                 </div>
             </form>
         </div>
