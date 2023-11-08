@@ -48,6 +48,11 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST">
                             @csrf
                         </form>
+						<li><a href="{{ route('managemenUser') }}" onclick="event.preventDefault(); 
+                        document.getElementById('managemenUser').submit();">MANAGEMEN USER</a></li>
+                        <form id="managemenUser" action="{{ route('managemenUser') }}">
+                            @csrf
+                        </form>
 					</ul>
 				</div>
 			</nav>

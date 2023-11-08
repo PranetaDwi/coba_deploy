@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserManagemenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,11 @@ Route::prefix('home')->group(function () {
     Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::get('/about', [DashboardController::class, 'about'])->name('about');
     Route::get('/portfolio', [DashboardController::class, 'portfolio'])->name('portfolio');
+});
+
+Route::prefix('managemen')->group(function () {
+    Route::get('/', [UserManagemenController::class, 'index'])->name('managemenUser');
+    Route::get('/edit/{id}', [UserManagemenController::class, 'edit'])->name('managemenUser.edit');
+    Route::post('/update/{id}', [UserManagemenController::class, 'update'])->name('managemenUser.update');
+    Route::post('/delete/{id}', [UserManagemenController::class, 'destroy'])->name('managemenUser.destroy');
 });

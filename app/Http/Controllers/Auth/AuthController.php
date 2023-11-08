@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Intervention\Image\Facades\Image;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -10,6 +11,9 @@ use Illuminate\Support\facades\Hash;
 use Mail;
 use App\Mail\SendEmail;
 use App\Jobs\SendMailJob;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
 
 class AuthController extends Controller
 {
@@ -24,13 +28,37 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:250',
             'email' => 'required|email|max:250|unique:users',
-            'password' => 'required|min:8|confirmed'
+            'password' => 'required|min:8|confirmed',
+            'photo' => 'image|nullable|mimes:jpg,png,jpeg|max:2048'
         ]);
+
+        if ($request->hasFile('photo')){
+            $photo = $request->file('photo');
+            $filenameWithExt = $request->file('photo')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('photo')->getClientOriginalExtension();
+            $filenameOriginal = $filename . '_' . time() . '.' . $extension;
+
+            $path = $request->file('photo')->storeAs('photos/original', $filenameOriginal);
+            
+            $thumbnailPath = public_path('storage/photos/thumbnail/' . $filenameOriginal);
+            Image::make($photo)
+                ->fit(100, 100)
+                ->save($thumbnailPath);
+
+            $squarePath = public_path('storage/photos/square/' . $filenameOriginal);
+            Image::make($photo)
+                ->fit(200, 200)
+                ->save($squarePath);
+
+            $path = $filenameOriginal;
+        };
 
         User::create([
             'name'=> $request->name,
             'email'=> $request->email,
-            'password'=> Hash::make($request->password)
+            'password'=> Hash::make($request->password),
+            'photo' => $path
         ]);
 
         $content = [
