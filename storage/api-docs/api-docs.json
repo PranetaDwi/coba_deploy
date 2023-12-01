@@ -1,0 +1,74 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Contoh API documentation (pertemuan 12)",
+        "description": "Ini punya Neta",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "pranetaw23@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/api/getgallery": {
+            "get": {
+                "tags": [
+                    "Get Data Gallery"
+                ],
+                "summary": "Dapetin Data Gallery",
+                "description": "Apakah API-nya berjalan? (duar-duar)",
+                "operationId": "GetGallery",
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/postGallery": {
+            "post": {
+                "tags": [
+                    "Upload Gambar"
+                ],
+                "summary": "Mengunggah Gambar",
+                "description": "Endpoint untuk mengunggah gambar.",
+                "operationId": "postGallery",
+                "requestBody": {
+                    "description": "Data untuk mengunggah gambar",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "Judul Upload",
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "description": "Deskripsi Gambar",
+                                        "type": "string"
+                                    },
+                                    "picture": {
+                                        "description": "File Gambar",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "default": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Image;
+use Intervention\Image\Facades\Image;
 
 class UserManagemenController extends Controller
 {

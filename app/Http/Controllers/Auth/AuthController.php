@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\facades\Auth;
 use Illuminate\Support\facades\Hash;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
 use App\Jobs\SendMailJob;
 use Illuminate\Support\Facades\Storage;
@@ -72,7 +72,8 @@ class AuthController extends Controller
         Auth::attempt($credentials);
         $request->session()->regenerate();
         
-        dispatch(new SendMailJob($content));
+        Mail::to($content['email'])->send(new SendEmail($content));
+        
         return redirect()->route('dashboard')->withSuccess('You have successfully registered & logged in!');
     }
 

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserManagemenController;
+use App\Http\Controllers\GalleryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +39,6 @@ Route::prefix('managemen')->group(function () {
     Route::post('/update/{id}', [UserManagemenController::class, 'update'])->name('managemenUser.update');
     Route::post('/delete/{id}', [UserManagemenController::class, 'destroy'])->name('managemenUser.destroy');
 });
+
+Route::resource('gallery', GalleryController::class);
+
