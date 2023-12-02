@@ -56,12 +56,9 @@ class GalleryController extends Controller
             $request->file('picture')->storeAs("posts_image", $mediumFilename);
             $request->file('picture')->storeAs("posts_image", $largeFilename);
 
-            $smallThumbnailPath = storage_path("app/public/posts_image/{$smallFilename}");
-            $this->createThumbnail($smallThumbnailPath, 150,93);
-            $mediumThumbnailPath = storage_path("app/public/posts_image/{$mediumFilename}");
-            $this->createThumbnail($mediumThumbnailPath, 300,185);
-            $largeThumbnailPath = storage_path("app/public/posts_image/{$largeFilename}");
-            $this->createThumbnail($largeThumbnailPath, 150,93);
+            $this->createThumbnail(public_path() . "/storage/posts_image/" . $smallFilename, 150,93);
+            $this->createThumbnail(public_path() . "/storage/posts_image/" . $mediumFilename, 300,185);
+            $this->createThumbnail(public_path() . "/storage/posts_image/" . $largeFilename, 150,93);
 
             } else {
             $filenameSimpan = 'noimage.png';
@@ -122,13 +119,10 @@ class GalleryController extends Controller
                 $request->file('picture')->storeAs("posts_image", $smallFilename);
                 $request->file('picture')->storeAs("posts_image", $mediumFilename);
                 $request->file('picture')->storeAs("posts_image", $largeFilename);
-
-                $smallThumbnailPath = storage_path("app/public/posts_image/{$smallFilename}");
-                $this->createThumbnail($smallThumbnailPath, 150,93);
-                $mediumThumbnailPath = storage_path("app/public/posts_image/{$mediumFilename}");
-                $this->createThumbnail($mediumThumbnailPath, 300,185);
-                $largeThumbnailPath = storage_path("app/public/posts_image/{$largeFilename}");
-                $this->createThumbnail($largeThumbnailPath, 150,93);
+                
+                $this->createThumbnail(public_path() . "/storage/posts_image/" . $smallFilename, 150,93);
+                $this->createThumbnail(public_path() . "/storage/posts_image/" . $mediumFilename, 300,185);
+                $this->createThumbnail(public_path() . "/storage/posts_image/" . $largeFilename, 150,93);
 
 
             } else {
