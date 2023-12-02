@@ -33,32 +33,36 @@ class AuthController extends Controller
         ]);
 
         if ($request->hasFile('photo')){
-            $photo = $request->file('photo');
             $filenameWithExt = $request->file('photo')->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('photo')->getClientOriginalExtension();
-            $filenameOriginal = $filename . '_' . time() . '.' . $extension;
+            $basename = uniqid() . time();
+            $smallFilename = "small_{$basename}.{$extension}";
+            $mediumFilename = "medium_{$basename}.{$extension}";
+            $largeFilename = "large_{$basename}.{$extension}";
+            $filenameSimpan = "{$basename}.{$extension}";
+            $path = $request->file('photo')->storeAs('posts_image', $filenameSimpan);
 
-            $path = $request->file('photo')->storeAs('photos/original', $filenameOriginal);
-            
-            $thumbnailPath = public_path('storage/photos/thumbnail/' . $filenameOriginal);
-            Image::make($photo)
-                ->fit(100, 100)
-                ->save($thumbnailPath);
+            $request->file('photo')->storeAs("posts_image", $smallFilename);
+            $request->file('photo')->storeAs("posts_image", $mediumFilename);
+            $request->file('photo')->storeAs("posts_image", $largeFilename);
 
-            $squarePath = public_path('storage/photos/square/' . $filenameOriginal);
-            Image::make($photo)
-                ->fit(200, 200)
-                ->save($squarePath);
-
-            $path = $filenameOriginal;
+            $smallThumbnailPath = storage_path("app/public/posts_image/{$smallFilename}");
+            $this->createThumbnail($smallThumbnailPath, 150,93);
+            $mediumThumbnailPath = storage_path("app/public/posts_image/{$mediumFilename}");
+            $this->createThumbnail($mediumThumbnailPath, 300,185);
+            $largeThumbnailPath = storage_path("app/public/posts_image/{$largeFilename}");
+            $this->createThumbnail($largeThumbnailPath, 150,93);
+        } else {
+            $filenameSimpan = 'noimage.png';
         };
+        
 
         User::create([
             'name'=> $request->name,
             'email'=> $request->email,
             'password'=> Hash::make($request->password),
-            'photo' => $path
+            'photo' => $filenameSimpan
         ]);
 
         $content = [
@@ -110,6 +114,14 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('login')->withSuccess('You have logged out successfully');
         
+    }
+    
+    public function createThumbnail($path, $width, $height)
+    {
+    $img = Image::make($path)->resize($width, $height, function ($constraint) {
+        $constraint->aspectRatio();
+    });
+    $img->save($path);
     }
 }
 

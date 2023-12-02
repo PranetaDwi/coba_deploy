@@ -15,7 +15,7 @@
     <tr>
         <th scope="row">{{ $user->id }}</th>
         <td>{{ $user->name }}</td>
-        <td><img src="{{asset('storage/photos/original/'.$user->photo )}}" width="150px"></td>
+        <td><img src="{{asset('storage/posts_image/'.$user->photo )}}" width="150px"></td>
         <td><form action="{{ route('managemenUser.edit', $user->id) }}">
                 @csrf
                 <button type="submit" class="btn btn-primary">Update</button>

@@ -31,49 +31,56 @@ class UserManagemenController extends Controller
 
     public function update(Request $request, $id){
         $photos = User::find($id);
-        File::delete(public_path() ."/storage/photos/original/".$photos->photo);
-        File::delete(public_path() ."/storage/photos/square/".$photos->photo);
-        File::delete(public_path() ."/storage/photos/thumbnail/".$photos->photo);
+        File::delete(public_path() ."/storage/posts_image/".$photos->photo);
         $request->validate([
             'name' => 'required|string|max:250',
             'photo' => 'image|nullable|max:1999'
         ]);
 
         if ($request->hasFile('photo')){
-            $photo = $request->file('photo');
             $filenameWithExt = $request->file('photo')->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('photo')->getClientOriginalExtension();
-            $filenameOriginal = $filename . '_' . time() . '.' . $extension;
+            $basename = uniqid() . time();
+            $smallFilename = "small_{$basename}.{$extension}";
+            $mediumFilename = "medium_{$basename}.{$extension}";
+            $largeFilename = "large_{$basename}.{$extension}";
+            $filenameSimpan = "{$basename}.{$extension}";
+            $path = $request->file('photo')->storeAs('posts_image', $filenameSimpan);
 
-            $path = $request->file('photo')->storeAs('photos/original', $filenameOriginal);
-            
-            $thumbnailPath = public_path('storage/photos/thumbnail/' . $filenameOriginal);
-            Image::make($photo)
-                ->fit(100, 100)
-                ->save($thumbnailPath);
+            $request->file('photo')->storeAs("posts_image", $smallFilename);
+            $request->file('photo')->storeAs("posts_image", $mediumFilename);
+            $request->file('photo')->storeAs("posts_image", $largeFilename);
 
-            $squarePath = public_path('storage/photos/square/' . $filenameOriginal);
-            Image::make($photo)
-                ->fit(200, 200)
-                ->save($squarePath);
-
-            $path = $filenameOriginal;
+            $smallThumbnailPath = storage_path("app/public/posts_image/{$smallFilename}");
+            $this->createThumbnail($smallThumbnailPath, 150,93);
+            $mediumThumbnailPath = storage_path("app/public/posts_image/{$mediumFilename}");
+            $this->createThumbnail($mediumThumbnailPath, 300,185);
+            $largeThumbnailPath = storage_path("app/public/posts_image/{$largeFilename}");
+            $this->createThumbnail($largeThumbnailPath, 150,93);
+        } else {
+            $filenameSimpan = 'noimage.png';
         };
 
         $photos->update([
             'name'=> $request->name,
-            'photo' => $path
+            'photo' => $filenameSimpan 
         ]);
         return redirect()->route('managemenUser');
     }
 
     public function destroy($id){
         $photos = User::find($id);
-        File::delete(public_path() ."/storage/photos/original/".$photos->photo);
-        File::delete(public_path() ."/storage/photos/square/".$photos->photo);
-        File::delete(public_path() ."/storage/photos/thumbnail/".$photos->photo);
+        File::delete(public_path() ."/storage/posts_image/".$photos->photo);
         $photos->delete();
         return redirect()->route('managemenUser');
+    }
+
+    public function createThumbnail($path, $width, $height)
+    {
+    $img = Image::make($path)->resize($width, $height, function ($constraint) {
+        $constraint->aspectRatio();
+    });
+    $img->save($path);
     }
 }
