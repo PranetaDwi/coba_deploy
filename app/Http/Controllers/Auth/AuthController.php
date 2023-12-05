@@ -42,10 +42,10 @@ class AuthController extends Controller
             $largeFilename = "large_{$basename}.{$extension}";
             $filenameSimpan = "{$basename}.{$extension}";
             $path = $request->file('photo')->storeAs('posts_image', $filenameSimpan);
-
-            $request->file('photo')->storeAs("posts_image", $smallFilename);
-            $request->file('photo')->storeAs("posts_image", $mediumFilename);
-            $request->file('photo')->storeAs("posts_image", $largeFilename);
+            
+            $request->file('photo')->storeAs("public/posts_image", $smallFilename);
+            $request->file('photo')->storeAs("public/posts_image", $mediumFilename);
+            $request->file('photo')->storeAs("public/posts_image", $largeFilename);
 
             $this->createThumbnail(public_path() . "/storage/posts_image/" . $smallFilename, 150,93);
             $this->createThumbnail(public_path() . "/storage/posts_image/" . $mediumFilename, 300,185);

@@ -47,7 +47,7 @@ class GalleryAPIController extends Controller
 
     public function index(){
 
-        $response = Http::get('http://127.0.0.1:9000/api/getgallery');
+        $response = Http::get('http://172.203.228.106/api/getgallery');
         $datas = $response->object()->data;
         return view('galleryAPI.index', compact('datas'));
     }
